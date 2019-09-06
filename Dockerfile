@@ -6,6 +6,7 @@ RUN mix local.hex --force && \
     mix hex.info
 
 WORKDIR /app
+
 ENV MIX_ENV prod
 
 ENV PORT 8080
@@ -21,12 +22,15 @@ RUN npm install -g brunch
 
 COPY . .
 
-RUN mkdir deps
-RUN cd deps && npm install phoenix phoenix_html
-RUN cd .. 
-RUN cd assets && npm install
-RUN cd assets brunch build --production
+RUN chmod 755 /app
 
+WORKDIR /app/assets
+RUN npm install phoenix
+RUN npm install phoenix_html
+RUN npm install
+RUN brunch build --production
+
+WORKDIR /app
 RUN mix deps.get
 RUN mix compile
 RUN mix phx.digest
