@@ -13,6 +13,7 @@ ENV PORT 8080
 ARG DB_PASSWORD
 ENV DB_PASSWORD ${DB_PASSWORD}
 
+RUN apt-get -qq update
 RUN apt-get -y -q install curl gnupg
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get -y -q install nodejs
@@ -20,7 +21,8 @@ RUN apt-get -y -q install nodejs
 COPY . .
 
 RUN cd assets
-RUN npm install brunch && brunch build --production
+RUN npm install brunch
+brunch build --production
 
 RUN mix deps.get
 RUN mix compile
