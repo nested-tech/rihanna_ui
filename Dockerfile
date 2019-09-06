@@ -20,12 +20,11 @@ RUN apt-get -y -q install nodejs
 RUN npm install -g brunch
 RUN mkdir deps
 RUN cd deps && npm install phoenix phoenix_html
-RUN cd ..
 
 COPY . .
 
 RUN cd assets && npm install
-RUN brunch build --production
+RUN cd assets brunch build --production
 
 RUN mix deps.get
 RUN mix compile
