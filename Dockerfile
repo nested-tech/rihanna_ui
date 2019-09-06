@@ -23,7 +23,7 @@ COPY . .
 
 RUN mkdir deps
 RUN cd deps && npm install phoenix phoenix_html
-WORKDIR /
+RUN cd .. 
 RUN cd assets && npm install
 RUN cd assets brunch build --production
 
