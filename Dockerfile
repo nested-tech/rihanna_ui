@@ -17,11 +17,14 @@ RUN apt-get -qq update
 RUN apt-get -y -q install curl gnupg
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get -y -q install nodejs
+RUN npm install -g brunch
+RUN mkdir deps
+RUN cd deps && npm install phoenix phoenix_html
+RUN cd ..
 
 COPY . .
 
-RUN cd assets
-RUN npm install brunch
+RUN cd assets && npm install
 RUN brunch build --production
 
 RUN mix deps.get
